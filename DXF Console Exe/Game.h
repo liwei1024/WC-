@@ -13,6 +13,8 @@ public:
 	void FullScreenSkills();
 	void FullScreenToPickUp();
 	void GoToNextRoom();
+	Pos GetCurrentRoomPos();
+	Pos GetBossRoomPos();
 	bool IsBossRoom();
 	bool IsOpenDoor();
 	bool GetTheCustomShop();

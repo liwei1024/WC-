@@ -12,8 +12,6 @@ Game::~Game()
 {
 }
 
-
-
 // 解密
 int Game::decrypt(int address)
 {
@@ -117,20 +115,63 @@ void Game::GoToNextRoom()
 
 }
 
+Pos Game::GetCurrentRoomPos()
+{
+	Pos CurrentRoomPos;
+	if (this->Status() == 1)
+	{
+		CurrentRoomPos.x = _Process.ReadOfset(__遍历取值, { __大区域偏移 });
+		CurrentRoomPos.y = _Process.ReadOfset(__遍历取值, { __小区域偏移 });
+	}
+	else {
+		DWORD OffsetAddress = _Process.ReadOfset(__房间编号, { __时间基址 ,__门型偏移 });
+		CurrentRoomPos.x = _Process.ReadInteger(OffsetAddress + __当前房间X);
+		CurrentRoomPos.y = _Process.ReadInteger(OffsetAddress + __当前房间Y);
+	}
+
+	return CurrentRoomPos;
+}
+
+Pos Game::GetBossRoomPos()
+{
+	Pos BossRoomPos;
+	DWORD OffsetAddress = _Process.ReadOfset(__房间编号, { __时间基址 ,__门型偏移 });
+	BossRoomPos.x = this->decrypt(OffsetAddress + __BOSS房间X);
+	BossRoomPos.y = this->decrypt(OffsetAddress + __BOSS房间Y);
+	return BossRoomPos;
+}
+
 bool Game::IsBossRoom()
 {
+	Pos CurrentRoomPos;
+	Pos BossRoomPos;
 
+	CurrentRoomPos = GetCurrentRoomPos();
+	BossRoomPos = GetBossRoomPos();
+
+	if (CurrentRoomPos.x == BossRoomPos.x && CurrentRoomPos.y == BossRoomPos.y)
+	{
+		return true;
+	}
+	return false;
 }
 
 bool Game::IsOpenDoor()
 {
-
+	if (Game::decrypt(_Process.ReadOfset(__人物基址, { __地图偏移 }) + __开门偏移) == 0)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool Game::GetTheCustomShop()
 {
 
 }
+
 void Game::ReturnCity()
 {
 
