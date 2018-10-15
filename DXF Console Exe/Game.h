@@ -6,6 +6,12 @@ public:
 	~Game();
 	int decrypt(int address);
 	void encrypt(INT32 Address, INT32 Value);
+	DWORD GetMapStartAddress();
+	DWORD GetMapObjectCount(DWORD MapStartAddress);
+	const char * GetMapName();
+	ObjectInfo GetObjectInfo(DWORD ObjectPointer);
+	std::vector<ObjectInfo> SortByDistance(std::vector<ObjectInfo> Objects);
+	VOID OutputMapObjectsInfo();
 	int Status();
 	void SelectRole();
 	void CityPlane(int MaxAreaID, int MinAreaId, int x, int y);

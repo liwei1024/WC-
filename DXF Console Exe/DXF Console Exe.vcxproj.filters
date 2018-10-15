@@ -39,6 +39,9 @@
     <ClInclude Include="structs.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -60,6 +63,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AStar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

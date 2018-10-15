@@ -221,7 +221,7 @@ LPVOID Process::AllocMemory(int index,size_t size)
 	int TempBuffer;
 	if (
 		(int)_MemoryStruct.Address > 0 && 
-		this->ReadMemory((INT)_MemoryStruct.Address,&TempBuffer,sizeof(TempBuffer)) == true &&
+		this->ReadMemory((INT)_MemoryStruct.Address,&TempBuffer,sizeof(TempBuffer)) == TRUE &&
 		_MemoryStruct.Size == size
 	)
 	{

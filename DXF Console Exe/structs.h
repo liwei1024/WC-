@@ -62,27 +62,6 @@ struct KnapsackInfo
 	DWORD goods_start_address;//物品首地址
 };
 
-struct AStarMapInfo
-{
-	int width;
-	int height;
-	std::vector<DWORD> room_channel;
-	Pos start_room;
-	Pos end_room;
-};
-
-struct AStarRoomInfo
-{
-	Coordinate coordinate;
-	Coordinate parent_coordinate;
-	int weight;
-	int numbering;
-	bool up;
-	bool bottom;
-	bool left;
-	bool right;
-};
-
 struct PlayerCount
 {
 	int StartRoomFlag = true;
