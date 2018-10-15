@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "Game.h"
 #include "Map.h"
+#include "SendPacket.h"
 
 
 HHOOK g_hHook;
@@ -21,8 +22,12 @@ VOID ThreadMessage(
 
 void test()
 {
-	Map _Map;
-	_Map.OutputMapObjectsInfo();
+	/*Map _Map;
+	_Map.OutputMapObjectsInfo();*/
+
+	ExecCALL(Asm_Ñ¡Ôñ½ÇÉ«,1,1);
+
+
 
 	//_Game.OutputTaskInfo(0);
 }

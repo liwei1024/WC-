@@ -43,5 +43,7 @@ void ProtectFile();
 
 void RestoreProtectFile();
 
+void ExecCALL(LPCVOID Call, size_t nargs = 0, ...);
+
 
 

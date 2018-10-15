@@ -45,11 +45,36 @@
 }
 
 
-SendPacket::SendPacket()
+//SendPacket::SendPacket()
+//{
+//}
+//
+//
+//SendPacket::~SendPacket()
+//{
+//}
+
+void __declspec(naked) Asm_返回角色()
 {
+	Asm_缓冲CALL(0x7);
+	Asm_发包CALL();
+	__asm ret
+	__asm int 3
+	__asm int 3
+	__asm int 3
+	__asm int 3
+	__asm int 3
 }
 
-
-SendPacket::~SendPacket()
+void __declspec(naked) Asm_选择角色(DWORD *params)
 {
+	Asm_缓冲CALL(4);
+	Asm_密包CALL(params, 3, true);
+	Asm_发包CALL();
+	__asm ret
+	__asm int 3
+	__asm int 3
+	__asm int 3
+	__asm int 3
+	__asm int 3
 }

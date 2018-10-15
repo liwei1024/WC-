@@ -153,10 +153,12 @@ BOOL Process::WriteMemory(INT lpBaseAddress, LPCVOID lpBuffer, INT nSize)
 	SIZE_T lpNumberOfBytesRead;
 	if (WriteProcessMemory(hProcess, (LPVOID)lpBaseAddress, lpBuffer, (SIZE_T)(nSize), &lpNumberOfBytesRead) == false) {
 		printf(VMProtectDecryptStringA("写入 %x 内存时失败！\n"), lpBaseAddress);
+		system("pause");
 		return false;
 	}
 	if (lpNumberOfBytesRead != nSize) {
 		printf(VMProtectDecryptStringA("写入 %x 内存时实际写入的长度与要写入的长度不一致！\n"), lpBaseAddress);
+		system("pause");
 		return false;
 	}
 	return true;
@@ -223,15 +225,24 @@ LPVOID Process::AllocMemory(int index,size_t size)
 	_MemoryStruct = this->MemoryVector[index];
 	int TempBuffer;
 	if (
-		(int)_MemoryStruct.Address > 0 && 
+		(int)_MemoryStruct.Address > 0 &&
 		this->ReadMemory((INT)_MemoryStruct.Address,&TempBuffer,sizeof(TempBuffer)) == TRUE &&
 		_MemoryStruct.Size == size
 	)
 	{
 		return _MemoryStruct.Address;
 	}
-	this->MemoryVector[index].Address = VirtualAllocEx(hProcess, NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-	return this->MemoryVector[index].Address;
+	_MemoryStruct.Address = VirtualAllocEx(hProcess, NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	_MemoryStruct.Size = size;
+
+	if (_MemoryStruct.Address == 0)
+	{
+		红色打印(VMProtectDecryptStringA("申请内存失败"));
+		system("pause");
+
+	}
+	this->MemoryVector[index] = _MemoryStruct;
+	return _MemoryStruct.Address;
 }
 
 // 释放所有申请的内存
