@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "message.h"
 #include "utils.h"
+#include "Game.h"
+#include "Map.h"
 
 
 HHOOK g_hHook;
@@ -17,6 +19,14 @@ VOID ThreadMessage(
 	青色打印("lParam %d", lParam);
 }
 
+void test()
+{
+	Map _Map;
+	_Map.OutputMapObjectsInfo();
+
+	//_Game.OutputTaskInfo(0);
+}
+
 LRESULT CALLBACK Keypress(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	CWPSTRUCT* p = (CWPSTRUCT*)lParam;
@@ -25,21 +35,27 @@ LRESULT CALLBACK Keypress(int nCode, WPARAM wParam, LPARAM lParam)
 		switch (wParam) //wParam中是消息ID
 		{
 			// 键盘消息
-		case WM_KEYDOWN:
-		{
-			switch (p->lParam)
+			case WM_KEYDOWN:
 			{
-			case VK_HOME:
-				PostThreadMessage(g_dwMainThreadId, 10024, 0, 0);
-				//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Thread, (LPVOID)this, NULL, NULL);
-				break;
-			case VK_END:
-				ProcessExit();//进程退出
-				break;
-			default:
-				break;
+				switch (p->lParam)
+				{
+				case VK_HOME:
+					//PostThreadMessage(g_dwMainThreadId, 10024, 0, 0);
+					//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)test, (LPVOID)this, NULL, NULL);
+					//Game().OutputMapObjectsInfo();
+					//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)test, NULL, NULL, NULL);
+					//青色打印("当前游戏状态 %d", _Process.ReadInteger(__游戏状态));
+					//AfxBeginThread();
+					_beginthreadex(NULL, NULL, (_beginthreadex_proc_type)test, NULL, NULL, NULL);
+					//ErasePEInfo();
+					break;
+				case VK_END:
+					ProcessExit();//进程退出
+					break;
+				default:
+					break;
+				}
 			}
-		}
 		}
 	}
 	return CallNextHookEx(g_hHook, nCode, wParam, lParam);
@@ -74,7 +90,7 @@ VOID UnsetGlobalKeyboardHook()
 
 void ProcessExit()
 {
-	OutputDebugString("111111111111233333333333333");
+	//OutputDebugString("111111111111233333333333333");
 	RestoreProtectFile();
 	_Process.Clear();
 	UnhookWindowsHookEx(g_hHook);

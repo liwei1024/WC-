@@ -22,28 +22,28 @@ Process::~Process()
 BOOL Process::Run(LPCSTR lpClass, LPCSTR lpName)
 {
 	VMProtectBeginUltra(" Process::Run");
-	hWnd = FindWindow(VMProtectDecryptStringA(lpClass), VMProtectDecryptStringA(lpName));
-	if (hWnd == NULL)
+	this->hWnd = FindWindow(VMProtectDecryptStringA(lpClass), VMProtectDecryptStringA(lpName));
+	if (this->hWnd == NULL)
 	{
 		ºìÉ«´òÓ¡(VMProtectDecryptStringA("GetWindowHandle Fail! Error Code - < %d >"), GetLastError());
 		return false;
 	}
-	GetWindowThreadProcessId(hWnd, &ProcessId);
-	if (ProcessId == NULL)
+	GetWindowThreadProcessId(hWnd, &this->ProcessId);
+	if (this->ProcessId == NULL)
 	{
 		ºìÉ«´òÓ¡(VMProtectDecryptStringA("GetProcessId Fail! Error Code - < %d >"), GetLastError());
 		return false;
 	}
-	hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, ProcessId);
-	if (hProcess == NULL)
+	this->hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, this->ProcessId);
+	if (this->hProcess == NULL)
 	{
 		ºìÉ«´òÓ¡(VMProtectDecryptStringA("OpenProcess Fail! Error Code - < %d >"), GetLastError());
 		return false;
 	}
 	this->UnHookLdrInitializeThunk();
-	ÂÌÉ«´òÓ¡(VMProtectDecryptStringA("hWnd			< %d >"), hWnd);
-	ºìÉ«´òÓ¡(VMProtectDecryptStringA("hProcess		< %d >"), hProcess);
-	»ÆÉ«´òÓ¡(VMProtectDecryptStringA("ProcessId		< %d >"), ProcessId);
+	ÂÌÉ«´òÓ¡(VMProtectDecryptStringA("hWnd			< %d >"), this->hWnd);
+	ºìÉ«´òÓ¡(VMProtectDecryptStringA("hProcess		< %d >"), this->hProcess);
+	»ÆÉ«´òÓ¡(VMProtectDecryptStringA("ProcessId		< %d >"), this->ProcessId);
 	VMProtectEnd();
 	return true;
 }
@@ -242,7 +242,7 @@ void Process::FreeAllMemory()
 	while (it != this->MemoryVector.end())
 	{
 		if (VirtualFreeEx(hProcess, it->second.Address, 0, MEM_RELEASE) == false)
-			ºìÉ«´òÓ¡("ÊÍ·Å %x Ê§°Ü", (int)it->second.Address);
+			ºìÉ«´òÓ¡(VMProtectDecryptStringA("ÊÍ·Å %x Ê§°Ü"), (int)it->second.Address);
 		it++;
 	}
 }
