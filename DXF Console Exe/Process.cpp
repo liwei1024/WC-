@@ -21,28 +21,30 @@ Process::~Process()
 
 BOOL Process::Run(LPCSTR lpClass, LPCSTR lpName)
 {
+	VMProtectBeginUltra(" Process::Run");
 	hWnd = FindWindow(VMProtectDecryptStringA(lpClass), VMProtectDecryptStringA(lpName));
 	if (hWnd == NULL)
 	{
-		红色打印(VMProtectDecryptStringA("取窗口句柄失败 Error Code - < %d >"), GetLastError());
+		红色打印(VMProtectDecryptStringA("GetWindowHandle Fail! Error Code - < %d >"), GetLastError());
 		return false;
 	}
 	GetWindowThreadProcessId(hWnd, &ProcessId);
 	if (ProcessId == NULL)
 	{
-		红色打印(VMProtectDecryptStringA("获取进程ID失败 Error Code - < %d >"), GetLastError());
+		红色打印(VMProtectDecryptStringA("GetProcessId Fail! Error Code - < %d >"), GetLastError());
 		return false;
 	}
 	hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, ProcessId);
 	if (hProcess == NULL)
 	{
-		红色打印(VMProtectDecryptStringA("打开进程失败 Error Code - < %d >"), GetLastError());
+		红色打印(VMProtectDecryptStringA("OpenProcess Fail! Error Code - < %d >"), GetLastError());
 		return false;
 	}
 	this->UnHookLdrInitializeThunk();
 	绿色打印(VMProtectDecryptStringA("hWnd			< %d >"), hWnd);
 	红色打印(VMProtectDecryptStringA("hProcess		< %d >"), hProcess);
 	黄色打印(VMProtectDecryptStringA("ProcessId		< %d >"), ProcessId);
+	VMProtectEnd();
 	return true;
 }
 

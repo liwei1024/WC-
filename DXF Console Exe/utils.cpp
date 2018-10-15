@@ -381,6 +381,7 @@ void ProtectFile()
 	string s2 = VMProtectDecryptStringA(szFileFullPath);
 	string s3 = VMProtectDecryptStringA(" /e /p everyone:n");
 	WinExec((s1 + s2 + s3).c_str(), SW_HIDE);
+	//system(VMProtectDecryptStringA("cls"));
 	VMProtectEnd();
 }
 
@@ -393,5 +394,6 @@ void RestoreProtectFile()
 	string s2 = VMProtectDecryptStringA(szFileFullPath);
 	string s3 = VMProtectDecryptStringA(" /e /p everyone:f");
 	WinExec((s1 + s2 + s3).c_str(), SW_HIDE);
+	//system(VMProtectDecryptStringA("cls"));
 	VMProtectEnd();
 }
