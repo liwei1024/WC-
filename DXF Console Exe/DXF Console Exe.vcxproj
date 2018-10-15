@@ -79,6 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -131,7 +132,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\MyFile\Tools\VMProtect Ultimate\Lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>VMProtectSDK32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <PostBuildEvent>
+      <Command>"D:\MyFile\Tools\VMProtect Ultimate\VMProtect_Con.exe" "$(SolutionDir)$(Configuration)\$(ProjectName).exe" "$(SolutionDir)$(Configuration)\svchost.exe"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -157,6 +164,7 @@
     <ClInclude Include="Calls.h" />
     <ClInclude Include="consts.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="message.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="SendPacket.h" />
@@ -168,6 +176,7 @@
     <ClCompile Include="Calls.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="message.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

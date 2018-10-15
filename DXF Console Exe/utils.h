@@ -37,3 +37,11 @@ void »¹Ô­¼ü×´Ì¬();
 
 bool VectorFindString(std::vector<std::string> list, std::string str);
 
+void ErasePEInfo();
+
+void ProtectFile();
+
+void RestoreProtectFile();
+
+
+

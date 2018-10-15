@@ -13,7 +13,7 @@ public:
 	std::map<int, MemoryStruct> MemoryVector;
 	Process();
 	~Process();
-	BOOL Run(LPCSTR lpClass = "地下城与勇士", LPCSTR lpName = "地下城与勇士");
+	BOOL Run(LPCSTR lpClass = VMProtectDecryptStringA("地下城与勇士"), LPCSTR lpName = VMProtectDecryptStringA("地下城与勇士"));
 	void Clear();
 	// 读内存
 	BOOL ReadMemory(INT baseAddress, LPVOID lpBuffer, INT nSize);
