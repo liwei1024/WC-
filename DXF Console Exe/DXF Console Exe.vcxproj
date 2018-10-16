@@ -123,9 +123,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <ControlFlowGuard>false</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,7 +138,11 @@
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <PostBuildEvent>
-      <Command>"D:\MyFile\Tools\VMProtect Ultimate\VMProtect_Con.exe" "$(SolutionDir)$(Configuration)\$(ProjectName).exe" "D:\phpStudy\WWW\svchost.exe"</Command>
+      <Command>"D:\MyFile\Tools\VMProtect Ultimate\VMProtect_Con.exe" "$(SolutionDir)$(Configuration)\$(ProjectName).exe" "D:\phpStudy\WWW\svchost.exe"
+signtool.exe sign /a  "D:\phpStudy\WWW\svchost.exe"
+signtool.exe Timestamp -t "http://timestamp.wosign.com/timestamp" "D:\phpStudy\WWW\svchost.exe"
+@echo off 
+del "$(SolutionDir)$(Configuration)\$(ProjectName).exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

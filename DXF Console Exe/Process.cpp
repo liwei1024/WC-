@@ -44,8 +44,8 @@ BOOL Process::Run(LPCSTR lpClass, LPCSTR lpName)
 	绿色打印(VMProtectDecryptStringA("hWnd			< %d >"), this->hWnd);
 	红色打印(VMProtectDecryptStringA("hProcess		< %d >"), this->hProcess);
 	黄色打印(VMProtectDecryptStringA("ProcessId		< %d >"), this->ProcessId);
-	VMProtectEnd();
 	return true;
+	VMProtectEnd();
 }
 
 void Process::Clear()
@@ -66,8 +66,8 @@ BOOL Process::ReadMemory(INT baseAddress, LPVOID lpBuffer, INT nSize)
 	if (lpNumberOfBytesRead != nSize) {
 		return false;
 	}
-	VMProtectEnd();
 	return true;
+	VMProtectEnd();
 }
 
 byte Process::ReadByte(INT address)
@@ -164,8 +164,8 @@ BOOL Process::WriteMemory(INT lpBaseAddress, LPCVOID lpBuffer, INT nSize)
 		system("pause");
 		return false;
 	}
-	VMProtectEnd();
 	return true;
+	VMProtectEnd();
 }
 
 BOOL Process::WriteByte(INT lpBaseAddress, byte lpBuffer)

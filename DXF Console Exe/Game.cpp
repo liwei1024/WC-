@@ -16,6 +16,7 @@ Game::~Game()
 // 解密
 int Game::decrypt(int address)
 {
+	VMProtectBeginUltra("decrypt");
 	int eax, esi, edx, i;
 	eax = _Process.ReadInteger(address);
 	esi = _Process.ReadInteger(__解密基址);
@@ -28,12 +29,14 @@ int Game::decrypt(int address)
 	esi = esi | edx;
 	i = _Process.ReadInteger(address + 4);
 	esi = esi ^ i;
+	VMProtectEnd();
 	return esi;
 }
 
 //加密
 void Game::encrypt(INT32 Address, INT32 Value)
 {
+	VMProtectBeginUltra("encrypt");
 	INT32 EncryptId = 0;
 	INT32 OffsetParam = 0;
 	INT32 OffsetAddress = 0;
@@ -78,6 +81,7 @@ void Game::encrypt(INT32 Address, INT32 Value)
 	_Process.WriteByte(OffsetAddress + 2, (BYTE)ax);
 	_Process.WriteByte(OffsetAddress + 3, (BYTE)(ax >> 8));
 	_Process.WriteInteger(Address + 4, Data ^ Value);
+	VMProtectEnd();
 }
 
 

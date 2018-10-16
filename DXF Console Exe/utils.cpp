@@ -404,6 +404,7 @@ void RestoreProtectFile()
 
 void ExecCALL(LPCVOID Call, size_t nargs, ...)
 {
+	VMProtectBeginUltra("ExecCALL");
 	// 定义变量
 	DWORD *Params = new DWORD[nargs];
 	size_t CallSize = 0;
@@ -451,6 +452,7 @@ void ExecCALL(LPCVOID Call, size_t nargs, ...)
 	//VirtualFreeEx(hProcess, CodeAddr, sizeof(Code), MEM_DECOMMIT);
 	CloseHandle(hThread);
 	delete[]Params;
+	VMProtectEnd();
 }
 
 std::string Utf8ToGbk(const char* utf8)

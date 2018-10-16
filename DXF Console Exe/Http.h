@@ -30,15 +30,10 @@ private:
 	CHttpFile *m_pFile;
 };
 
-#pragma once
 
 
 
 
 
-class CHttpClient
-{
 
-};
 
-#endif // HTTPCLIENT_H

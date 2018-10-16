@@ -164,7 +164,7 @@ VOID AStar::search_path(AStarMapInfo map_info, vector<vector<AStarRoomInfo>> &ro
 		if (current_room.up == TRUE)
 		{
 			to_search_room = room_array[current_room.coordinate.y - 1][current_room.coordinate.x];
-			if (has_list(open_list, to_search_room) == false and has_list(close_list, to_search_room) == false)
+			if (has_list(open_list, to_search_room) == false && has_list(close_list, to_search_room) == false)
 			{
 				open_list.insert(open_list.end(), to_search_room);
 				room_array[to_search_room.coordinate.y][to_search_room.coordinate.x].parent_coordinate = current_room.coordinate;
@@ -173,7 +173,7 @@ VOID AStar::search_path(AStarMapInfo map_info, vector<vector<AStarRoomInfo>> &ro
 		if (current_room.bottom == TRUE)
 		{
 			to_search_room = room_array[current_room.coordinate.y + 1][current_room.coordinate.x];
-			if (has_list(open_list, to_search_room) == false and has_list(close_list, to_search_room) == false)
+			if (has_list(open_list, to_search_room) == false && has_list(close_list, to_search_room) == false)
 			{
 				open_list.insert(open_list.end(), to_search_room);
 				room_array[to_search_room.coordinate.y][to_search_room.coordinate.x].parent_coordinate = current_room.coordinate;
@@ -182,7 +182,7 @@ VOID AStar::search_path(AStarMapInfo map_info, vector<vector<AStarRoomInfo>> &ro
 		if (current_room.left == TRUE)
 		{
 			to_search_room = room_array[current_room.coordinate.y][current_room.coordinate.x - 1];
-			if (has_list(open_list, to_search_room) == false and has_list(close_list, to_search_room) == false)
+			if (has_list(open_list, to_search_room) == false && has_list(close_list, to_search_room) == false)
 			{
 				open_list.insert(open_list.end(), to_search_room);
 				room_array[to_search_room.coordinate.y][to_search_room.coordinate.x].parent_coordinate = current_room.coordinate;
@@ -191,7 +191,7 @@ VOID AStar::search_path(AStarMapInfo map_info, vector<vector<AStarRoomInfo>> &ro
 		if (current_room.right == TRUE)
 		{
 			to_search_room = room_array[current_room.coordinate.y][current_room.coordinate.x + 1];
-			if (has_list(open_list, to_search_room) == false and has_list(close_list, to_search_room) == false)
+			if (has_list(open_list, to_search_room) == false && has_list(close_list, to_search_room) == false)
 			{
 				open_list.insert(open_list.end(), to_search_room);
 				room_array[to_search_room.coordinate.y][to_search_room.coordinate.x].parent_coordinate = current_room.coordinate;
@@ -237,7 +237,7 @@ int AStar::GetDirection(int type)
 	search_path(map_info, room_array, boss_room);
 	// 4.»ØËÝÂ·¾¶
 	recall_path(map_info, room_array, boss_room, path);
-	printf("size %zd\n", path.size());
+	/*printf("size %zd\n", path.size());
 	for (SIZE_T i = path.size() - 1; i >= 0; i--)
 	{
 		if (path[i] == 0)
@@ -253,6 +253,6 @@ int AStar::GetDirection(int type)
 		else if (path[i] == 3) {
 			printf("ÏÂ\n");
 		}
-	}
+	}*/
 	return path[path.size() - 1];
 }
