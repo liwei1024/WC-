@@ -81,11 +81,13 @@ BOOL WINAPI ConsoleCtrlhandler(DWORD dwCtrlType)
 
 VOID SetGlobalKeyboardHook()
 {
+	VMProtectBeginUltra("SetGlobalKeyboardHook");
 	g_dwMainThreadId = GetCurrentThreadId();
 	//SetConsoleCtrlHandler((PHANDLER_ROUTINE)ConsoleCtrlhandler, TRUE);
 	g_hHook = SetWindowsHookEx(WH_KEYBOARD_LL, Keypress, GetModuleHandle(NULL), NULL);
 	if (g_hHook == NULL)
 		ºìÉ«´òÓ¡("hook failure!");
+	VMProtectEnd();
 }
 
 VOID UnsetGlobalKeyboardHook()
