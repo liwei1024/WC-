@@ -43,6 +43,8 @@ void ProtectFile();
 
 void RestoreProtectFile();
 
+std::string Utf8ToGbk(const char * utf8);
+
 void ExecCALL(LPCVOID Call, size_t nargs = 0, ...);
 
 

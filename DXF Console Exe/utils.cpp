@@ -45,6 +45,7 @@ wstring FormatWstring(const wchar_t *lpcwszFormat, ...)
 
 bool 删除自身()
 {
+	VMProtectBeginUltra("删除自身");
 	bool result = true;
 	char FileName[MAX_PATH];
 	memset(FileName, 0, MAX_PATH);
@@ -83,6 +84,7 @@ bool 删除自身()
 		system("pause");
 		exit(0);
 	}
+	VMProtectEnd();
 	return result;
 }
 
@@ -163,6 +165,7 @@ void 窗口初始化()
 
 bool EnableDebugPrivilege(bool bEnable)
 {
+	VMProtectBeginUltra("EnableDebugPrivilege");
 	//Enabling the debug privilege allows the application to see 
 	//information about service application
 	BOOL fOK = false;     //Assume function fails
@@ -179,6 +182,7 @@ bool EnableDebugPrivilege(bool bEnable)
 		fOK = (GetLastError() == ERROR_SUCCESS);
 		CloseHandle(hToken);
 	}
+	VMProtectEnd();
 	return fOK;
 }
 
@@ -447,4 +451,18 @@ void ExecCALL(LPCVOID Call, size_t nargs, ...)
 	//VirtualFreeEx(hProcess, CodeAddr, sizeof(Code), MEM_DECOMMIT);
 	CloseHandle(hThread);
 	delete[]Params;
+}
+
+std::string Utf8ToGbk(const char* utf8)
+{
+	int len = MultiByteToWideChar(CP_UTF8, 0, utf8, -1, NULL, 0);
+	wchar_t* wstr = new wchar_t[len + 1];
+	memset(wstr, 0, len + 1);
+	MultiByteToWideChar(CP_UTF8, 0, utf8, -1, wstr, len);
+	len = WideCharToMultiByte(CP_ACP, 0, wstr, -1, NULL, 0, NULL, NULL);
+	char* str = new char[len + 1];
+	memset(str, 0, len + 1);
+	WideCharToMultiByte(CP_ACP, 0, wstr, -1, str, len, NULL, NULL);
+	if (wstr) delete[] wstr;
+	return str;
 }

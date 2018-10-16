@@ -58,6 +58,7 @@ void Process::Clear()
 //=====================================¶Á======================================//
 BOOL Process::ReadMemory(INT baseAddress, LPVOID lpBuffer, INT nSize)
 {
+	VMProtectBeginUltra("ReadMemory");
 	SIZE_T lpNumberOfBytesRead;
 	if (ReadProcessMemory(hProcess, (LPCVOID)baseAddress, lpBuffer, (SIZE_T)nSize, &lpNumberOfBytesRead) == FALSE) {
 		return false;
@@ -65,6 +66,7 @@ BOOL Process::ReadMemory(INT baseAddress, LPVOID lpBuffer, INT nSize)
 	if (lpNumberOfBytesRead != nSize) {
 		return false;
 	}
+	VMProtectEnd();
 	return true;
 }
 
@@ -150,6 +152,7 @@ DWORD Process::ReadOfset(DWORD lpBaseAddress, vector<int> Ofsets)
 
 BOOL Process::WriteMemory(INT lpBaseAddress, LPCVOID lpBuffer, INT nSize)
 {
+	VMProtectBeginUltra("WriteMemory");
 	SIZE_T lpNumberOfBytesRead;
 	if (WriteProcessMemory(hProcess, (LPVOID)lpBaseAddress, lpBuffer, (SIZE_T)(nSize), &lpNumberOfBytesRead) == false) {
 		printf(VMProtectDecryptStringA("Ð´Èë %x ÄÚ´æÊ±Ê§°Ü£¡\n"), lpBaseAddress);
@@ -161,6 +164,7 @@ BOOL Process::WriteMemory(INT lpBaseAddress, LPCVOID lpBuffer, INT nSize)
 		system("pause");
 		return false;
 	}
+	VMProtectEnd();
 	return true;
 }
 

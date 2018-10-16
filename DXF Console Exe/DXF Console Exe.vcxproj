@@ -23,7 +23,7 @@
     <ProjectGuid>{15AB3246-201F-4930-B40B-9CDACA4C9DDB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DXFConsoleExe</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -164,6 +164,7 @@
     <ClInclude Include="Calls.h" />
     <ClInclude Include="consts.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Http.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="pch.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Calls.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Http.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="message.cpp" />
