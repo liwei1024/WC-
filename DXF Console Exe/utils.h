@@ -45,6 +45,18 @@ void RestoreProtectFile();
 
 std::string Utf8ToGbk(const char * utf8);
 
+std::string CSringToString(CString 待转换文本);
+
+std::string IntToHex(int Value, int n);
+
+INT 还原地址(std::string 文本地址);
+
+BYTE * VectorToBYTE(std::vector<int> Asmcode);
+
+std::vector<int> IntToBytes(int a, int len);
+
+std::vector<int> BytesToVectorInt(byte * b, size_t len);
+
 void ExecCALL(LPCVOID Call, size_t nargs = 0, ...);
 
 

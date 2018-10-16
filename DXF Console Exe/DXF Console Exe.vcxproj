@@ -169,6 +169,7 @@ del "$(SolutionDir)$(Configuration)\$(ProjectName).exe"</Command>
     <ClInclude Include="Calls.h" />
     <ClInclude Include="consts.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Hook.h" />
     <ClInclude Include="Http.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="message.h" />
@@ -183,6 +184,7 @@ del "$(SolutionDir)$(Configuration)\$(ProjectName).exe"</Command>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Calls.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Hook.cpp" />
     <ClCompile Include="Http.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
