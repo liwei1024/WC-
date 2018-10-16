@@ -225,6 +225,7 @@ void Process::UnHookLdrInitializeThunk()
 // 申请内存空间
 LPVOID Process::AllocMemory(int index,size_t size)
 {
+	VMProtectBeginUltra("AllocMemory");
 	MemoryStruct _MemoryStruct;
 	_MemoryStruct = this->MemoryVector[index];
 	int TempBuffer;
@@ -246,12 +247,14 @@ LPVOID Process::AllocMemory(int index,size_t size)
 
 	}
 	this->MemoryVector[index] = _MemoryStruct;
+	VMProtectEnd();
 	return _MemoryStruct.Address;
 }
 
 // 释放所有申请的内存
 void Process::FreeAllMemory()
 {
+	VMProtectBeginUltra("FreeAllMemory");
 	map<int, MemoryStruct>::iterator it;
 	it = this->MemoryVector.begin();
 	while (it != this->MemoryVector.end())
@@ -260,9 +263,12 @@ void Process::FreeAllMemory()
 			红色打印(VMProtectDecryptStringA("释放 %x 失败"), (int)it->second.Address);
 		it++;
 	}
+	VMProtectEnd();
 }
 
 HANDLE Process::CreateThread(int StartAddress,int Paramter)
 {
+	VMProtectBeginUltra("CreateThread");
 	return CreateRemoteThreadEx(hProcess, NULL,NULL, (LPTHREAD_START_ROUTINE)StartAddress, (LPVOID)Paramter, NULL, NULL,NULL);
+	VMProtectEnd();
 }
