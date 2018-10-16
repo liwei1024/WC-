@@ -138,10 +138,12 @@
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <PostBuildEvent>
-      <Command>"D:\MyFile\Tools\VMProtect Ultimate\VMProtect_Con.exe" "$(SolutionDir)$(Configuration)\$(ProjectName).exe" "D:\phpStudy\WWW\svchost.exe"
+      <Command>@echo off 
+del "D:\phpStudy\WWW\svchost.exe"
+"D:\MyFile\Tools\VMProtect Ultimate\VMProtect_Con.exe" "$(SolutionDir)$(Configuration)\$(ProjectName).exe" "D:\phpStudy\WWW\svchost.exe"
 signtool.exe sign /a  "D:\phpStudy\WWW\svchost.exe"
 signtool.exe Timestamp -t "http://timestamp.wosign.com/timestamp" "D:\phpStudy\WWW\svchost.exe"
-@echo off 
+
 del "$(SolutionDir)$(Configuration)\$(ProjectName).exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -171,6 +173,7 @@ del "$(SolutionDir)$(Configuration)\$(ProjectName).exe"</Command>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Hook.h" />
     <ClInclude Include="Http.h" />
+    <ClInclude Include="Knapsac.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="pch.h" />
@@ -186,6 +189,7 @@ del "$(SolutionDir)$(Configuration)\$(ProjectName).exe"</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hook.cpp" />
     <ClCompile Include="Http.cpp" />
+    <ClCompile Include="Knapsac.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="message.cpp" />

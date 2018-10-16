@@ -6,6 +6,8 @@
 //	~SendPacket();
 //};
 
-void Asm_返回角色();
+void SP_返回角色();
 
-void Asm_选择角色(DWORD *params);
+void SP_选择角色(DWORD params);
+
+void SP_卖物(DWORD  params);

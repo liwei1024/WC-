@@ -62,6 +62,15 @@ struct KnapsackInfo
 	DWORD goods_start_address;//物品首地址
 };
 
+struct GoodsInfo
+{
+	int address;
+	int count = 1;
+	int level;
+	const char* name;
+	int index;
+};
+
 struct PlayerCount
 {
 	int StartRoomFlag = true;

@@ -4,6 +4,7 @@ class Map
 public:
 	Map();
 	~Map();
+	DWORD GetMapAddress();
 	DWORD GetMapStartAddress();
 	DWORD GetMapObjectCount(DWORD MapStartAddress);
 	ObjectInfo GetObjectInfo(DWORD ObjectPointer);

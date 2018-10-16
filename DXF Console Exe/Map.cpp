@@ -13,14 +13,19 @@ Map::~Map()
 {
 }
 
+DWORD Map::GetMapAddress()
+{
+	return _Process.ReadOfset(__人物基址, { __地图偏移 });
+}
+
 DWORD Map::GetMapStartAddress()
 {
-	return  _Process.ReadInteger(_Process.ReadOfset(__人物基址, { __地图偏移 }) + __首地址);
+	return  _Process.ReadInteger(GetMapAddress() + __首地址);
 }
 
 DWORD Map::GetMapObjectCount(DWORD MapStartAddress)
 {
-	return  (_Process.ReadInteger(_Process.ReadOfset(__人物基址, { __地图偏移 }) + __尾地址) - MapStartAddress) / 4;
+	return  (_Process.ReadInteger(GetMapAddress() + __尾地址) - MapStartAddress) / 4;
 }
 
 ObjectInfo Map::GetObjectInfo(DWORD ObjectPointer)

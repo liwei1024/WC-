@@ -54,7 +54,7 @@
 //{
 //}
 
-void __declspec(naked) Asm_返回角色()
+void __declspec(naked) SP_返回角色()
 {
 	Asm_缓冲CALL(0x7);
 	Asm_发包CALL();
@@ -66,10 +66,27 @@ void __declspec(naked) Asm_返回角色()
 	__asm int 3
 }
 
-void __declspec(naked) Asm_选择角色(DWORD *params)
+void __declspec(naked) SP_选择角色(DWORD params)
 {
 	Asm_缓冲CALL(4);
 	Asm_密包CALL(params, 3, true);
+	Asm_发包CALL();
+	__asm ret
+	__asm int 3
+	__asm int 3
+	__asm int 3
+	__asm int 3
+	__asm int 3
+}
+
+void __declspec(naked) SP_卖物(DWORD params)
+{
+	Asm_缓冲CALL(22);
+	Asm_密包CALL(0, 1, false);
+	Asm_密包CALL(params + 0x0, 2, true);//位置
+	Asm_密包CALL(params + 0x4, 3, true);//数量
+	Asm_密包CALL(2, 3, false);			  
+	Asm_密包CALL(params + 0x8, 3, true);
 	Asm_发包CALL();
 	__asm ret
 	__asm int 3

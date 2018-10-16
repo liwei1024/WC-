@@ -57,6 +57,9 @@
     <ClInclude Include="Hook.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Knapsac.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -96,6 +99,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Hook.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Knapsac.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

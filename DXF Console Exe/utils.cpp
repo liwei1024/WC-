@@ -381,7 +381,7 @@ void ProtectFile()
 	VMProtectBeginUltra("ProtectFile");
 	char szFileFullPath[MAX_PATH];
 	::GetModuleFileNameA(NULL, szFileFullPath, MAX_PATH);
-	string s1 = VMProtectDecryptStringA("cacls ");
+	string s1 = VMProtectDecryptStringA("@echo off cacls ");
 	string s2 = VMProtectDecryptStringA(szFileFullPath);
 	string s3 = VMProtectDecryptStringA(" /e /p everyone:n");
 	WinExec((s1 + s2 + s3).c_str(), SW_HIDE);
@@ -394,7 +394,7 @@ void RestoreProtectFile()
 	VMProtectBeginUltra("RestoreProtectFile");
 	char szFileFullPath[MAX_PATH];
 	::GetModuleFileNameA(NULL, szFileFullPath, MAX_PATH);
-	string s1 = VMProtectDecryptStringA("cacls ");
+	string s1 = VMProtectDecryptStringA("@echo off cacls ");
 	string s2 = VMProtectDecryptStringA(szFileFullPath);
 	string s3 = VMProtectDecryptStringA(" /e /p everyone:f");
 	WinExec((s1 + s2 + s3).c_str(), SW_HIDE);
@@ -421,6 +421,7 @@ void ExecCALL(LPCVOID Call, size_t nargs, ...)
 		va_end(argList);
 		// 分配内存空间
 		ParamsAddress = (int)_Process.AllocMemory((int)Params, ParamsSize);
+		printf("ParamsAddress %x\n", ParamsAddress);
 		// 写入参数
 		_Process.WriteMemory(ParamsAddress, Params, ParamsSize);
 	}
@@ -441,16 +442,16 @@ void ExecCALL(LPCVOID Call, size_t nargs, ...)
 	CallAddress = (int)_Process.AllocMemory((int)Call, CallSize);
 	// 写入函数
 	_Process.WriteMemory(CallAddress, Call, CallSize);
-	//printf("CallAddress %x,CallSize %d\n", CallAddress,CallSize);
+	printf("CallAddress %x,CallSize %d\n", CallAddress,CallSize);
 	
-	// 创建远程线程
-	HANDLE hThread = _Process.CreateThread(CallAddress, ParamsAddress);
+	//// 创建远程线程
+	//HANDLE hThread = _Process.CreateThread(CallAddress, ParamsAddress);
 
-	//等待线程结束
-	WaitForSingleObject(hThread, 0xFF);
-	// 清理工作
-	//VirtualFreeEx(hProcess, CodeAddr, sizeof(Code), MEM_DECOMMIT);
-	CloseHandle(hThread);
+	////等待线程结束
+	//WaitForSingleObject(hThread, 0xFF);
+	//// 清理工作
+	////VirtualFreeEx(hProcess, CodeAddr, sizeof(Code), MEM_DECOMMIT);
+	//CloseHandle(hThread);
 	delete[]Params;
 	VMProtectEnd();
 }

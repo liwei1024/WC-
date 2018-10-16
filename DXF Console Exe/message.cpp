@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Map.h"
 #include "SendPacket.h"
+#include "Knapsac.h"
 
 
 HHOOK g_hHook;
@@ -25,11 +26,16 @@ void test()
 	/*Map _Map;
 	_Map.OutputMapObjectsInfo();*/
 
-	ExecCALL(Asm_选择角色,1,1);
+	//ExecCALL(Asm_选择角色,1,1);
 
 
 
 	//_Game.OutputTaskInfo(0);
+
+	Knapsac _Knapsac;
+	_Knapsac.OutputGoodsInfo();
+	_Knapsac.SaleGoods();
+
 }
 
 LRESULT CALLBACK Keypress(int nCode, WPARAM wParam, LPARAM lParam)
