@@ -237,7 +237,7 @@ LPVOID Process::AllocMemory(int index,size_t size)
 	{
 		return _MemoryStruct.Address;
 	}
-	_MemoryStruct.Address = VirtualAllocEx(hProcess, NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	_MemoryStruct.Address = VirtualAllocEx(hProcess, NULL, size, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 	_MemoryStruct.Size = size;
 
 	if (_MemoryStruct.Address == 0)
@@ -269,6 +269,6 @@ void Process::FreeAllMemory()
 HANDLE Process::CreateThread(int StartAddress,int Paramter)
 {
 	VMProtectBeginUltra("CreateThread");
-	return CreateRemoteThreadEx(hProcess, NULL,NULL, (LPTHREAD_START_ROUTINE)StartAddress, (LPVOID)Paramter, NULL, NULL,NULL);
+	return CreateRemoteThread(hProcess, NULL,0, (LPTHREAD_START_ROUTINE)StartAddress, (LPVOID)Paramter, 0, 0);
 	VMProtectEnd();
 }

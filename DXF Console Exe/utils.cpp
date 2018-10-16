@@ -428,6 +428,7 @@ void ExecCALL(LPCVOID Call, size_t nargs, ...)
 	//printf("Call %x\n", (int)Call);
 	// 获取远程call大小
 	while (true) {
+		CallSize++;
 		if (
 			*(byte*)((DWORD)Call + (CallSize + 0)) == 0xcc &&
 			*(byte*)((DWORD)Call + (CallSize + 1)) == 0xcc &&
@@ -437,21 +438,19 @@ void ExecCALL(LPCVOID Call, size_t nargs, ...)
 		{
 			break;
 		}
-		CallSize++;
 	}
 	CallAddress = (int)_Process.AllocMemory((int)Call, CallSize);
 	// 写入函数
 	_Process.WriteMemory(CallAddress, Call, CallSize);
 	printf("CallAddress %x,CallSize %d\n", CallAddress,CallSize);
-	
-	//// 创建远程线程
-	//HANDLE hThread = _Process.CreateThread(CallAddress, ParamsAddress);
+	Sleep(1000);
+	// 创建远程线程
+	HANDLE hThread = _Process.CreateThread(CallAddress, ParamsAddress);
 
-	////等待线程结束
-	//WaitForSingleObject(hThread, 0xFF);
-	//// 清理工作
-	////VirtualFreeEx(hProcess, CodeAddr, sizeof(Code), MEM_DECOMMIT);
-	//CloseHandle(hThread);
+	//等待线程结束
+	WaitForSingleObject(hThread, 0xFF);
+	// 清理工作
+	CloseHandle(hThread);
 	delete[]Params;
 	VMProtectEnd();
 }
