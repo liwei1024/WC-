@@ -468,3 +468,72 @@ std::string Utf8ToGbk(const char* utf8)
 	if (wstr) delete[] wstr;
 	return str;
 }
+
+std::string CSringToString(CString 待转换文本)
+{
+	CStringA stra(待转换文本.GetBuffer(0));
+	待转换文本.ReleaseBuffer();
+	std::string stdStr = stra.GetBuffer(0);
+	stra.ReleaseBuffer();
+	return stdStr;
+}
+
+std::string IntToHex(int Value, int n)
+{
+	CString str;
+	str.Format(_T("0000000%x"), Value);
+	string tmp1 = CSringToString(str);
+	tmp1 = tmp1.substr(tmp1.length() - n, n);
+	string tmp2;
+	for (unsigned int i = 0; i < tmp1.length() / 2; i++)
+	{
+		tmp2 = tmp2 + tmp1.substr(tmp1.length() - 2 - 2 * i, 2);
+	}
+	return tmp2;
+}
+
+INT 还原地址(std::string 文本地址)
+{
+	int 转换地址 = 0;
+	char 临时数组[256] = { 0 };
+	strcpy_s(临时数组, 文本地址.c_str());
+	sscanf_s(临时数组, "%x", &转换地址);
+	return 转换地址;
+}
+
+BYTE* VectorToBYTE(std::vector<int> Asmcode)
+{
+	byte* 临时数组 = new byte[Asmcode.size()];
+	int i = 0;
+	for (auto it = std::begin(Asmcode); it != std::end(Asmcode); ++it)
+	{
+		临时数组[i++] = *it;
+	}
+	return 临时数组;
+}
+
+std::vector<int> IntToBytes(int a, int len)
+{
+	string s = IntToHex(a, len);
+	int 长度 = s.length();
+	if (长度 % 2 != 0)
+	{
+		长度 = 长度 + 1;
+	}
+	vector<int> 结果(长度 / 2, 0);
+	for (int i = 0; i < 长度 / 2; i++)
+	{
+		结果[i] = 还原地址(s.substr(i * 2, 2));
+	}
+	return 结果;
+}
+
+vector<int> BytesToVectorInt(byte * b,size_t len)
+{
+	vector<int> v;
+	for (size_t i = 0; i < len; i++)
+	{
+		v.insert(v.end(),b[i]);
+	}
+	return v;
+}
